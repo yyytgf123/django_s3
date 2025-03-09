@@ -1,9 +1,82 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <a href="/register">Upload Page</a>
+
+    <a href="/useradd">회원 가입</a>
+
+    <title>Image Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            background: white;
+            padding: 10px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 180px; /* 고정 높이 */
+            object-fit: cover; /* 이미지 비율 유지하며 채우기 */
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .image-name {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
 <body>
+    <h2>Image Gallery</h2>
+
     {% if result %}
-        {% for img in result %}
-            <img src="https://sdk-django-s3.s3.ap-northeast-2.amazonaws.com/{{ picture.img }}" alt="">
-        {% endfor %}
+        <div class="gallery-container">
+            {% for img in result %}  <!-- 최신 업로드된 이미지를 앞쪽에 배치 -->
+                <div class="gallery-item">
+                    <img src="https://sdk-django-s3.s3.ap-northeast-2.amazonaws.com/{{ img.img }}" alt="Uploaded Image">
+                    <p class="image-name">{{ img.img }}</p> <!-- 파일명 출력 -->
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No images uploaded yet.</p>
     {% endif %}
 </body>
 </html>
