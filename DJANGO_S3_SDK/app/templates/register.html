@@ -4,14 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S3 Image Upload</title>
+    {% include 'fragments/header.html' %}
+
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
-            background-color: #f4f4f4;
+        }
+
+        .nav-container {
+            width: 100%;
+            background: #222;
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-container ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-container ul li {
+            display: inline;
+        }
+
+        .nav-container ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px 15px;
+        }
+
+        .nav-container ul li a:hover {
+            color: #007bff;
         }
 
         .upload-container {
@@ -20,6 +55,8 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            width: 300px;
+            margin-top: 50px;
         }
 
         h2 {
@@ -67,30 +104,21 @@
             background: #218838;
         }
     </style>
-    <a href="/">Main Page</a>
-    
-    <a href="/useradd">회원 가입</a>
 </head>
 <body>
     <div class="upload-container">
         <h2>Upload Images to S3</h2>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            
-            <!-- 파일 선택 버튼 -->
             <label for="file-upload" class="custom-file-upload">
                 Select Images
             </label>
             <input type="file" id="file-upload" name="image" multiple onchange="displayFileName()">
-            
-            <!-- 파일 이름 표시 -->
             <p class="file-name" id="file-name">No file chosen</p>
-            
-            <!-- 업로드 버튼 -->
             <button type="submit">Upload</button>
         </form>
     </div>
-
+    
     <script>
         function displayFileName() {
             let input = document.getElementById('file-upload');
